@@ -2,14 +2,14 @@
 #include <string>
 #include <cctype>
 
+using namespace std;
 int main()
 {
-    std::string input, line;
-    while (true)
+    string input, line;
+
+    // get input
+    while (getline(cin, line))
     {
-        std::getline(std::cin, line);
-        if (line.empty())
-            break; // 當讀取到空行時結束輸入
         input += line;
     }
 
@@ -24,38 +24,51 @@ int main()
 
         if (isdigit(c))
         {
-            std::string num;
+            string num;
+
             while (i < input.size() && isdigit(input[i]))
             {
                 num += input[i];
                 i++;
             }
             i--; // 調整外部迴圈的增量
-            std::cout << "NUM " << num << std::endl;
+
+            // 如果 num 的長度不等於 1，去除 num 前面的 0
+            if (num.size() != 1)
+            {
+                size_t j = 0;
+                while (j < num.size() - 1 && num[j] == '0')
+                {
+                    j++;
+                }
+                num = num.substr(j);
+            }
+
+            cout << "NUM " << num << endl;
         }
         else if (c == '+')
         {
-            std::cout << "PLUS" << std::endl;
+            cout << "PLUS" << endl;
         }
         else if (c == '-')
         {
-            std::cout << "MINUS" << std::endl;
+            cout << "MINUS" << endl;
         }
         else if (c == '*')
         {
-            std::cout << "MUL" << std::endl;
+            cout << "MUL" << endl;
         }
         else if (c == '/')
         {
-            std::cout << "DIV" << std::endl;
+            cout << "DIV" << endl;
         }
         else if (c == '(')
         {
-            std::cout << "LPR" << std::endl;
+            cout << "LPR" << endl;
         }
         else if (c == ')')
         {
-            std::cout << "RPR" << std::endl;
+            cout << "RPR" << endl;
         }
     }
 
