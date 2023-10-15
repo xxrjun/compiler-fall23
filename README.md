@@ -3,11 +3,11 @@
 On Mac
 
 ```bash
-g++ --std=c++98
+g++ --std=c++11
 ```
 
 On Windows
 
 ```bash
-g++ --std=gnu++98
+g++ --std=gnu++11
 ```
