@@ -118,3 +118,20 @@ int main()
         }
     }
 }
+
+/*
+Basic patterns: Matching:
+x  the character x
+.  any character except newline
+^  the beginning of the input
+$  the end of the input
+*  0 or more repetitions of the previous item
++  1 or more repetitions of the previous item
+?  0 or 1 repetitions of the previous item
+*?, +?, ??  same as above, but as few repetitions as possible
+{m,n}  from m (default 0) to n (default infinity) repetitions of the previous item
+{m,n}?  same as above, but as few repetitions as possible
+
+Grouping:
+(R) R itself
+ */

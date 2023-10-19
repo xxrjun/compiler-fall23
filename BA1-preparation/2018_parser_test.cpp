@@ -8,11 +8,12 @@ using namespace std;
 /* Token type */
 enum TokenType
 {
-    ID,     // [A-Za-z_][A-Za-z0-9_]*
-    STRLIT, // "[^"]*"
-    LBR,    // \(
-    RBR,    // \)
-    DOT,    // \.
+    ID,        // [A-Za-z_][A-Za-z0-9_]*
+    STRLIT,    // "[^"]*"
+    LBR,       // \(
+    RBR,       // \)
+    DOT,       // \.
+    SEMICOLON, // ;
     INVALID,
     END
 };
@@ -28,6 +29,7 @@ struct Token
 bool program();
 bool stmts();
 bool stmt();
+bool exp();
 bool primary();
 bool primary_tail();
 
@@ -74,7 +76,7 @@ int main()
 void get_next_token()
 {
     // 忽略換行與空格
-    while (cur_pos < input_length && input[cur_pos] == '\n')
+    while (cur_pos < input_length && isspace(input[cur_pos]))
         cur_pos++;
 
     // 設定結尾
@@ -138,6 +140,12 @@ void get_next_token()
         cur_token.val = ".";
         ++cur_pos;
     }
+    else if (c == ';')
+    {
+        cur_token.type = SEMICOLON;
+        cur_token.val = ";";
+        ++cur_pos;
+    }
     else
     {
         cur_token.type = INVALID;
@@ -161,13 +169,29 @@ bool stmts()
 
 bool stmt()
 {
+    if (exp())
+    {
+        if (cur_token.type == SEMICOLON)
+        {
+            parsed_tokens.push_back(cur_token);
+            get_next_token();
+            return true;
+        }
+        return false;
+    }
+
+    return false;
+}
+
+bool exp()
+{
     if (cur_token.type == STRLIT)
     {
         parsed_tokens.push_back(cur_token);
         get_next_token();
         return true;
     }
-    else if (cur_token.type == RBR) // stmt為空的情形
+    else if (cur_token.type == RBR) // exp為空的情形
     {
         return true; // λ
     }
@@ -206,7 +230,7 @@ bool primary_tail()
     {
         parsed_tokens.push_back(cur_token);
         get_next_token();
-        if (stmt())
+        if (exp())
         {
             parsed_tokens.push_back(cur_token);
             get_next_token();
@@ -233,6 +257,8 @@ string token_type_to_string(TokenType type)
         return "RBR";
     case DOT:
         return "DOT";
+    case SEMICOLON:
+        return "SEMICOLON";
     case INVALID:
         return "INVALID";
     case END:
