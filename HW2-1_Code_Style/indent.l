@@ -1,7 +1,7 @@
 %{
-int indent = 0; // 記錄當前的縮排層級
+int indent = 0;
 
-// 定義 print_tabs 函數
+
 void print_tabs() {
     for(int i = 0; i < indent; i++) {
         printf("\t");
@@ -22,4 +22,8 @@ void print_tabs() {
 int main() {
     yylex();
     return 0;
+}
+
+int yywrap() {
+    return 1;
 }

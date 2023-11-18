@@ -22,3 +22,11 @@ On M2 Mac (arm64)
 lex -o lex.yy.c lex.l
 gcc -o lex lex.yy.c -ll
 ```
+
+On Windows
+
+```bash
+flex myLexProgram.l
+bison -d myYaccProgram.y
+gcc -o indent lex.yy.c
+```
