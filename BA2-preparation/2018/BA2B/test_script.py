@@ -58,9 +58,9 @@ def compile_and_test(compilation_command, source_file, testcase_dir):
 # source_file = input("Enter the source file name: ")
 compile_command = """
 lex -o lex.yy.c lex.l
-gcc -o lex lex.yy.c -ll
+gcc -o a lex.yy.c -ll
 """
-source_file = "lex" 
+source_file = "a" 
 testcase_dir = 'testcases'
 
 compile_and_test(compile_command, source_file, testcase_dir)
