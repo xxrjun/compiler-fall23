@@ -56,9 +56,12 @@ def compile_and_test(compilation_command, source_file, testcase_dir):
 # 使用範例
 # compile_command = input("Enter the compilation command: ")
 # source_file = input("Enter the source file name: ")
+# Windows Command
+# flex indent.l
+# gcc -o indent lex.yy.c
 compile_command = """
-flex indent.l
-gcc -o indent lex.yy.c
+lex -o lex.yy.c indent.l
+gcc -o lex lex.yy.c -ll
 """
 source_file = "indent" 
 testcase_dir = 'testcases'

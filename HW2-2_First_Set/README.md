@@ -19,9 +19,11 @@
 3. **輸出結果**：將每個非終端符號的 First Set 輸出。
 
 ## 實作部分
+
 程式分為幾個主要部分：
 
 ### 1. 輔助函數：split
+
 此函數用於將字符串按指定分隔符拆分成子字符串，並將它們儲存在一個向量中。
 
 ```cpp
@@ -45,8 +47,8 @@ vector<string> split(const string &str, char delimiter)
 #### 函數原型
 
 ```cpp
-set<char> computeFirstSet(const string &symbol, 
-                          map<char, vector<string>> &rules, 
+set<char> computeFirstSet(const string &symbol,
+                          map<char, vector<string>> &rules,
                           map<char, set<char>> &firstSets)
 ```
 
@@ -60,6 +62,7 @@ set<char> computeFirstSet(const string &symbol,
 set<char> computeFirstSet(const string &symbol, map<char, vector<string>> &rules, map<char, set<char>> &firstSets)
 {
     // 如果已經計算過此符號的 First Set，則直接返回已儲存的結果
+    // 這樣可以提高效率，避免重複計算
     if (firstSets.find(symbol[0]) != firstSets.end())
     {
         return firstSets[symbol[0]];
@@ -67,46 +70,49 @@ set<char> computeFirstSet(const string &symbol, map<char, vector<string>> &rules
 
     set<char> firstSet;
 
-    // 若符號是終端符號、EOF 或 epsilon，則其 First Set 就是其本身
+    // 如果符號是終端符號、EOF 或 epsilon (分別用小寫字母、'$' 和 ';' 表示)
+    // 則其 First Set 就是其本身
     if (islower(symbol[0]) || symbol[0] == ';' || symbol[0] == '$')
     {
         firstSet.insert(symbol[0]);
         return firstSet;
     }
 
-    // 若符號是非終端符號，則基於其產生規則計算 First Set
+    // 如果符號是非終端符號，則需要基於其產生規則來計算 First Set
     for (const auto &production : rules[symbol[0]])
     {
-        // 檢查該產生規則是否所有符號均導向 epsilon
+        // 標記用於確定是否所有符號均導向 epsilon (空字串)
         bool allLeadToEpsilon = true;
 
+        // 遍歷產生規則中的每個符號
         for (const char &ch : production)
         {
-            // 遞迴計算當前符號的 First Set
+            // 遞迴調用來計算當前符號的 First Set
             set<char> subFirstSet = computeFirstSet(string(1, ch), rules, firstSets);
 
-            // 檢查當前符號是否導向 epsilon
+            // 判斷當前符號的 First Set 是否包含 epsilon
             allLeadToEpsilon = allLeadToEpsilon && (subFirstSet.find(';') != subFirstSet.end());
 
-            // 如果當前符號不導向 epsilon，則將除 epsilon 外的符號加入 firstSet
+            // 從子 First Set 中移除 epsilon
             subFirstSet.erase(';');
+            // 將子 First Set 中的元素加入到當前的 First Set
             firstSet.insert(subFirstSet.begin(), subFirstSet.end());
 
-            // 如果當前符號不導向 epsilon，則停止處理這條產生規則
+            // 如果當前符號的 First Set 不包含 epsilon，則停止處理這條產生規則
             if (!allLeadToEpsilon)
             {
                 break;
             }
         }
 
-        // 如果該產生規則所有符號均導向 epsilon，則將 epsilon 加入 firstSet
+        // 如果產生規則中的所有符號的 First Set 均包含 epsilon，則將 epsilon 加入到 First Set
         if (allLeadToEpsilon)
         {
             firstSet.insert(';');
         }
     }
 
-    // 儲存並返回計算出的 First Set
+    // 儲存計算出的 First Set 以供後續使用
     firstSets[symbol[0]] = firstSet;
     return firstSet;
 }
@@ -131,16 +137,55 @@ set<char> computeFirstSet(const string &symbol, map<char, vector<string>> &rules
 主函數處理標準輸入以讀取語法規則，調用 `computeFirstSet` 函數計算 First Sets，並將結果輸出。
 
 ```cpp
-int main()
-{
-    // ... 主函數實作
-}
+    string line;
+
+    // 規則和 First Sets 的映射
+    map<char, vector<string>> rules;
+    map<char, set<char>> firstSets;
+
+    // 從標準輸入讀取語法規則
+    while (getline(cin, line) && line != "END_OF_GRAMMAR")
+    {
+        // 使用 split 函數將讀取的行按空格拆分為 tokens
+        vector<string> tokens = split(line, ' ');
+
+        // 取出 tokens 第一個元素的第一個字符，作為非終端符號
+        char nonterminal = tokens[0][0];
+
+        // 使用 split 函數將 tokens 第二個元素按 '|' 拆分為 productions
+        vector<string> productions = split(tokens[1], '|');
+
+        // 將非終端符號和其對應的產生規則存入映射 rules 中
+        rules[nonterminal] = productions;
+    }
+
+    // 為每個非終端符號計算 First Set
+    for (const auto &rule : rules)
+    {
+        firstSets[rule.first] = computeFirstSet(string(1, rule.first), rules, firstSets);
+    }
+
+    // 輸出 First Sets
+    for (const auto &firstSet : firstSets)
+    {
+        cout << firstSet.first << " ";
+        for (char terminal : firstSet.second)
+        {
+            cout << terminal;
+        }
+        cout << endl;
+    }
+
+    cout << "END_OF_FIRST" << endl;
+    return 0;
 ```
 
 ## 使用說明
+
 1. 將語法規則按指定格式輸入，每行表示一個非終端符號及其產生規則。
 2. 規則輸入完成後，輸入 `END_OF_GRAMMAR` 表示結束。
 3. 程式將輸出每個非終端符號的 First Set，然後以 `END_OF_FIRST` 結束。
 
 ## 注意事項
+
 - 程式假設輸入的語法規則是格式正確且沒有遞迴。

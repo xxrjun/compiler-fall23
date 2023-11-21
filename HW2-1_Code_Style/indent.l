@@ -1,8 +1,7 @@
 %{
 int indent = 0;
 
-
-void print_tabs() {
+void printTabs() {
     for(int i = 0; i < indent; i++) {
         printf("\t");
     }
@@ -11,19 +10,28 @@ void print_tabs() {
 
 %%
 
-\t      {}
-\n      { printf("\n");  print_tabs();}
-"{"     { indent++; printf("{"); }
-"}"     { indent--; printf("\n"); print_tabs(); printf("}"); }
-.       { ECHO; }
+"\t"      {}
+"{"     {
+            indent++; 
+            printf("{"); 
+        }
+"}"     {
+            indent--; 
+            printf("\n"); 
+            printTabs(); 
+            printf("}"); 
+        }
+"\n"    {
+            printf("\n"); 
+            printTabs();
+        }
+.       {
+            ECHO;
+        }
 
 %%
 
-int main() {
+int main(int argc, char **argv) {
     yylex();
     return 0;
-}
-
-int yywrap() {
-    return 1;
 }
