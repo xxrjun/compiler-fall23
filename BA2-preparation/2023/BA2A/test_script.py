@@ -56,11 +56,9 @@ def compile_and_test(compilation_command, source_file, testcase_dir):
 # 使用範例
 # compile_command = input("Enter the compilation command: ")
 # source_file = input("Enter the source file name: ")
-compile_command = """
-lex -o lex.yy.c table.l
-gcc -o table lex.yy.c -ll
-"""
-source_file = "table" 
+compile_command = """lex -o lex.yy.c second_question.l
+gcc -o second_question lex.yy.c -ll"""
+source_file = "second_question" 
 testcase_dir = 'testcases'
 
 compile_and_test(compile_command, source_file, testcase_dir)
