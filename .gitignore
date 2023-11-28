@@ -28,7 +28,6 @@
 
 # Executables
 *.exe
-*.out
 *.app
 
 # VS Code
@@ -1015,7 +1014,6 @@ _deps
 
 # Executables
 *.exe
-*.out
 *.app
 
 # C/C++ binary extension file
@@ -1054,7 +1052,6 @@ _deps
 
 # Executables
 *.exe
-*.out
 *.app
 *.i*86
 *.x86_64
