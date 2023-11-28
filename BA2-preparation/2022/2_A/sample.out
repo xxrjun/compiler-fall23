@@ -1,0 +1,10 @@
+"""
+Multiline Comments
+"""
+# This is my first comment.
+if True:
+	print(123)
+	"""
+	Oooooo~~~
+	"""
+print("Oh yeah~~Oh yeah~~")
