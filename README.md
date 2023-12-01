@@ -33,8 +33,20 @@ gcc -o indent lex.yy.c
 
 ## Yacc & Lex 指令
 
+On Mac
+
 ```bash
-bison -d -o y.tab.c matrix_calculator.y 
+bison -d -o y.tab.c matrix_calculator.y
+gcc -c -g -I.. y.tab.c
+lex -o lex.yy.c matrix_calculator.l
+gcc -c -g -I.. lex.yy.c
+gcc -o matrix_calculator y.tab.o lex.yy.o -ll
+```
+
+On Windows
+
+```bash
+bison -d -o y.tab.c matrix_calculator.y
 gcc -c -g -I.. y.tab.c
 flex -o lex.yy.c matrix_calculator.l
 gcc -c -g -I.. lex.yy.c
