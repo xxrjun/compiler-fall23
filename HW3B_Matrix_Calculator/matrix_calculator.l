@@ -1,5 +1,7 @@
 %{
 	#include "y.tab.h"
+	int yyerror(char *);
+	int yylex(void);
 %}
 
 %%
@@ -12,6 +14,6 @@
 "("                          { return LPAREN; }
 ")"                          { return RPAREN; }
 [ \t\n]+                     { /* ignore whitespace */ }
-.                            { yyerror("Syntax Error"); }
+.                            { return yyerror("Syntax Error"); }
 
 %%

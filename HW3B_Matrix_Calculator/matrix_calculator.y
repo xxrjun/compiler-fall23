@@ -2,6 +2,9 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 
+    int yylex();
+    int yyerror(const char *s);
+
 	// Define the Matrix structure
 	typedef struct Matrix {
 		int rows;
@@ -113,7 +116,7 @@ int main() {
     return 0;
 }
 
-void yyerror(const char *s) {
+int yyerror(const char *s) {
     fprintf(stderr, "Error: %s\n", s);
-    exit(1);
+    return 0;
 }

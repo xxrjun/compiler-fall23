@@ -93,6 +93,9 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 
+    int yylex();
+    int yyerror(const char *s);
+
 	// Define the Matrix structure
 	typedef struct Matrix {
 		int rows;
@@ -133,13 +136,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 25 "matrix_calculator.y"
+#line 28 "matrix_calculator.y"
 {
     Matrix matrix;
     ASTNode *node;
 }
 /* Line 193 of yacc.c.  */
-#line 143 "y.tab.c"
+#line 146 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -152,7 +155,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 156 "y.tab.c"
+#line 159 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -436,7 +439,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    38,    39,    41,    42,    44,    45,    46
+       0,    40,    40,    41,    42,    44,    45,    47,    48,    49
 };
 #endif
 
@@ -1339,48 +1342,48 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 37 "matrix_calculator.y"
+#line 40 "matrix_calculator.y"
     { (yyval.node) = (yyvsp[(1) - (1)].node); ;}
     break;
 
   case 3:
-#line 38 "matrix_calculator.y"
+#line 41 "matrix_calculator.y"
     { (yyval.node) = check_and_create_op_node(ADD, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node)); ;}
     break;
 
   case 4:
-#line 39 "matrix_calculator.y"
+#line 42 "matrix_calculator.y"
     { (yyval.node) = check_and_create_op_node(SUB, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node)); ;}
     break;
 
   case 5:
-#line 41 "matrix_calculator.y"
+#line 44 "matrix_calculator.y"
     { (yyval.node) = (yyvsp[(1) - (1)].node); ;}
     break;
 
   case 6:
-#line 42 "matrix_calculator.y"
+#line 45 "matrix_calculator.y"
     { (yyval.node) = check_and_create_op_node(MUL, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node)); ;}
     break;
 
   case 7:
-#line 44 "matrix_calculator.y"
+#line 47 "matrix_calculator.y"
     { (yyval.node) = create_matrix_node((yyvsp[(1) - (1)].matrix)); ;}
     break;
 
   case 8:
-#line 45 "matrix_calculator.y"
+#line 48 "matrix_calculator.y"
     { (yyval.node) = (yyvsp[(2) - (3)].node); ;}
     break;
 
   case 9:
-#line 46 "matrix_calculator.y"
+#line 49 "matrix_calculator.y"
     { (yyval.node) = check_and_create_op_node(TRANSPOSE, (yyvsp[(1) - (2)].node), NULL); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1384 "y.tab.c"
+#line 1387 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1594,7 +1597,7 @@ yyreturn:
 }
 
 
-#line 48 "matrix_calculator.y"
+#line 51 "matrix_calculator.y"
 
 
 // Implementation of auxiliary functions
@@ -1663,8 +1666,8 @@ int main() {
     return 0;
 }
 
-void yyerror(const char *s) {
+int yyerror(const char *s) {
     fprintf(stderr, "Error: %s\n", s);
-    exit(1);
+    return 0;
 }
 

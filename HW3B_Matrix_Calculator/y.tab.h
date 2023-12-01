@@ -62,7 +62,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 25 "matrix_calculator.y"
+#line 28 "matrix_calculator.y"
 {
     Matrix matrix;
     ASTNode *node;
