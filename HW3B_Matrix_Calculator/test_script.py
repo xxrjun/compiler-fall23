@@ -56,11 +56,18 @@ def compile_and_test(compilation_command, source_file, testcase_dir):
 # 使用範例
 # compile_command = input("Enter the compilation command: ")
 # source_file = input("Enter the source file name: ")
+isMac = True
 compile_command = """
 bison -d -o y.tab.c matrix_calculator.y
-gcc -c -g -I.. y.tab.c
+gcc -c -g -I. y.tab.c
 lex -o lex.yy.c matrix_calculator.l
-gcc -c -g -I.. lex.yy.c
+gcc -c -g -I. lex.yy.c
+gcc -o matrix_calculator y.tab.o lex.yy.o -ll
+""" if isMac else """
+bison -d -o y.tab.c matrix_calculator.y
+flex -o lex.yy.c matrix_calculator.l
+gcc -c -g -I. y.tab.c
+gcc -c -g -I. lex.yy.c
 gcc -o matrix_calculator y.tab.o lex.yy.o -ll
 """
 source_file = "matrix_calculator" 
