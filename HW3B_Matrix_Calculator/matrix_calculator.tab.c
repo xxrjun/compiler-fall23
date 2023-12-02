@@ -125,14 +125,13 @@ typedef union YYSTYPE
 #line 10 "matrix_calculator.y"
 {
     int ival;
-    int loc;
     struct def {
         int i;
         int j;
     } Matrix;
 }
 /* Line 193 of yacc.c.  */
-#line 136 "y.tab.c"
+#line 135 "matrix_calculator.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -145,7 +144,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 149 "y.tab.c"
+#line 148 "matrix_calculator.tab.c"
 
 #ifdef short
 # undef short
@@ -429,7 +428,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    30,    31,    44,    57,    69,    70
+       0,    28,    28,    29,    30,    43,    56,    68,    69
 };
 #endif
 
@@ -1334,17 +1333,17 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 29 "matrix_calculator.y"
+#line 28 "matrix_calculator.y"
     {printf("Accepted\n"); return 0;;}
     break;
 
   case 3:
-#line 30 "matrix_calculator.y"
+#line 29 "matrix_calculator.y"
     { (yyval.Matrix).i = (yyvsp[(2) - (5)].ival),(yyval.Matrix).j = (yyvsp[(4) - (5)].ival); ;}
     break;
 
   case 4:
-#line 32 "matrix_calculator.y"
+#line 31 "matrix_calculator.y"
     {
                 if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
                 {
@@ -1360,7 +1359,7 @@ yyreduce:
     break;
 
   case 5:
-#line 45 "matrix_calculator.y"
+#line 44 "matrix_calculator.y"
     {
                 if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
                 {
@@ -1376,7 +1375,7 @@ yyreduce:
     break;
 
   case 6:
-#line 58 "matrix_calculator.y"
+#line 57 "matrix_calculator.y"
     {
                 if( (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).i ) 
                 {
@@ -1391,18 +1390,18 @@ yyreduce:
     break;
 
   case 7:
-#line 69 "matrix_calculator.y"
+#line 68 "matrix_calculator.y"
     { (yyval.Matrix).i = (yyvsp[(1) - (2)].Matrix).j; (yyval.Matrix).j = (yyvsp[(1) - (2)].Matrix).i; ;}
     break;
 
   case 8:
-#line 70 "matrix_calculator.y"
+#line 69 "matrix_calculator.y"
     { (yyval.Matrix).i = (yyvsp[(2) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(2) - (3)].Matrix).j; ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1406 "y.tab.c"
+#line 1405 "matrix_calculator.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1616,7 +1615,7 @@ yyreturn:
 }
 
 
-#line 72 "matrix_calculator.y"
+#line 71 "matrix_calculator.y"
 
 
 void semantic_error(){

@@ -40,43 +40,41 @@
       know about them.  */
    enum yytokentype {
      NUM = 258,
-     LSBR = 259,
-     RSBR = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
-     TRANSPOSE = 264,
-     LPAR = 265,
-     RPAR = 266
+     ADD_SUB = 259,
+     MUL = 260,
+     TRS = 261,
+     LRBR = 262,
+     RRBR = 263,
+     LSBR = 264,
+     RSBR = 265
    };
 #endif
 /* Tokens.  */
 #define NUM 258
-#define LSBR 259
-#define RSBR 260
-#define ADD 261
-#define SUB 262
-#define MUL 263
-#define TRANSPOSE 264
-#define LPAR 265
-#define RPAR 266
+#define ADD_SUB 259
+#define MUL 260
+#define TRS 261
+#define LRBR 262
+#define RRBR 263
+#define LSBR 264
+#define RSBR 265
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "matrix_calculator.y"
+#line 12 "a.y"
 {
-    int ival;
-    int loc;
-    struct def {
-        int i;
-        int j;
-    } Matrix;
+int 	ival;
+int 	loc;
+struct def{
+	int i;
+	int j;
+	} mat;
 }
 /* Line 1529 of yacc.c.  */
-#line 80 "y.tab.h"
+#line 78 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

@@ -1,122 +1,86 @@
 %{
-	#include <stdio.h>
-	#include <stdlib.h>
+    #include <stdio.h>
 
-    int yylex();
-    int yyerror(const char *s);
-
-	// Define the Matrix structure
-	typedef struct Matrix {
-		int rows;
-		int cols;
-	} Matrix;
-
-	// Define the ASTNode structure
-	typedef struct ASTNode {
-		int operation; // Represents the operation (ADD, SUB, MUL, TRANSPOSE)
-		struct ASTNode *left; // Left child in AST
-		struct ASTNode *right; // Right child in AST
-		Matrix matrix; // Matrix dimensions
-	} ASTNode;
-
-	// Function prototypes
-	ASTNode* create_matrix_node(Matrix m);
-	ASTNode* check_and_create_op_node(int operation, ASTNode *left, ASTNode *right);
-	void free_ast(ASTNode *node);
+    extern int col;
+    int yylex(void);
+    void yyerror(const char *msg);
+    void semantic_error();
 %}
 
 %union {
-    Matrix matrix;
-    ASTNode *node;
+    int ival;
+    struct def {
+        int i;
+        int j;
+    } Matrix;
 }
 
-%token <matrix> MATRIX
-%token ADD SUB MUL TRANSPOSE LPAREN RPAREN
-%type <node> expression term factor
+%type <Matrix> matrix
+%token <ival> NUM 
+%token LSBR RSBR ADD SUB MUL TRANSPOSE LPAR RPAR
+
+%left TRANSPOSE
+%left MUL
+%left ADD SUB
 
 %%
 
-// Grammar rules for matrix expressions
-expression: term { $$ = $1; }
-           | expression ADD term { $$ = check_and_create_op_node(ADD, $1, $3); }
-           | expression SUB term { $$ = check_and_create_op_node(SUB, $1, $3); };
-
-term: factor { $$ = $1; }
-     | term MUL factor { $$ = check_and_create_op_node(MUL, $1, $3); };
-
-factor: MATRIX { $$ = create_matrix_node($1); }
-       | LPAREN expression RPAREN { $$ = $2; }
-       | factor TRANSPOSE { $$ = check_and_create_op_node(TRANSPOSE, $1, NULL); };
+line : matrix {printf("Accepted\n"); return 0;}
+matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
+        | matrix ADD matrix 
+            {
+                if( $1.i == $3.i && $1.j == $3.j )
+                {
+                    $$.i = $1.i;
+                    $$.j = $1.j;
+                }
+                else 
+                {
+                    semantic_error();
+                    return 0;
+                }
+            }
+        | matrix SUB matrix 
+            {
+                if( $1.i == $3.i && $1.j == $3.j )
+                {
+                    $$.i = $1.i;
+                    $$.j = $1.j;
+                }
+                else 
+                {
+                    semantic_error();
+                    return 0;
+                }
+            }
+        | matrix MUL matrix     
+            {
+                if( $1.j == $3.i ) 
+                {
+                    $$.i = $1.i; $$.j = $3.j;
+                }
+                else 
+                {
+                    semantic_error();
+                    return 0;
+                }
+            }
+        | matrix TRANSPOSE      { $$.i = $1.j; $$.j = $1.i; }
+        | LPAR matrix RPAR      { $$.i = $2.i; $$.j = $2.j; }
 
 %%
 
-// Implementation of auxiliary functions
-ASTNode* create_matrix_node(Matrix m) {
-    ASTNode* node = (ASTNode*)malloc(sizeof(ASTNode));
-    node->operation = 0; // 0 for a matrix
-    node->left = NULL;
-    node->right = NULL;
-    node->matrix = m;
-    return node;
+void semantic_error(){
+    printf("Semantic error on col %d\n", col);
 }
 
-ASTNode* check_and_create_op_node(int operation, ASTNode *left, ASTNode *right) {
-    // Check dimensions based on operation
-    switch (operation) {
-        case ADD:
-        case SUB:
-            if (left->matrix.rows != right->matrix.rows || left->matrix.cols != right->matrix.cols) {
-                printf("Semantic Error: Dimension mismatch for addition/subtraction\n");
-                exit(1);
-            }
-            break;
-        case MUL:
-            if (left->matrix.cols != right->matrix.rows) {
-                printf("Semantic Error: Dimension mismatch for multiplication\n");
-                exit(1);
-            }
-            break;
-        case TRANSPOSE:
-            // Transpose operation only changes dimensions, no need for dimension check
-            break;
-        default:
-            printf("Unknown operation\n");
-            exit(1);
-    }
-
-    // Create operation node
-    ASTNode* node = (ASTNode*)malloc(sizeof(ASTNode));
-    node->operation = operation;
-    node->left = left;
-    node->right = right;
-
-    // Set the resulting matrix dimensions
-    if (operation == TRANSPOSE) {
-        node->matrix.rows = left->matrix.cols;
-        node->matrix.cols = left->matrix.rows;
-    } else {
-        node->matrix.rows = left->matrix.rows;
-        node->matrix.cols = right->matrix.cols;
-    }
-    return node;
+void yyerror (const char *msg)
+{
+    printf("Syntax Error\n");
 }
 
-void free_ast(ASTNode *node) {
-    if (node != NULL) {
-        free_ast(node->left);
-        free_ast(node->right);
-        free(node);
-    }
+int main(int argc, char *argv[]) {
+        yyparse();
+        return(0);
 }
 
-int main() {
-    yyparse();
-    // Remember to free the AST after use
-    // free_ast(ast_root); // You need to manage the root of your AST
-    return 0;
-}
-
-int yyerror(const char *s) {
-    fprintf(stderr, "Error: %s\n", s);
-    return 0;
-}

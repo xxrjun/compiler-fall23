@@ -1,19 +1,24 @@
+%option noyywrap
+
 %{
-	#include "y.tab.h"
-	int yyerror(char *);
-	int yylex(void);
+	#include "matrix_calculator.tab.h"
+	int col = 0;
 %}
+
 
 %%
 
-"[" [0-9]+ "," [0-9]+ "]"    { yylval.matrix = new_matrix(yytext); return MATRIX; }
-"+"                          { return ADD; }
-"-"                          { return SUB; }
-"*"                          { return MUL; }
-"^T"                         { return TRANSPOSE; }
-"("                          { return LPAREN; }
-")"                          { return RPAREN; }
-[ \t\n]+                     { /* ignore whitespace */ }
-.                            { return yyerror("Syntax Error"); }
+"["     { col += yyleng; return LSBR; }  
+"]"     { col += yyleng; return RSBR; } 
+"("		{ col += yyleng; return LPAR; }
+")"		{ col += yyleng; return RPAR; }
+"+"		{ col += yyleng; return ADD; }
+"-"		{ col += yyleng; return SUB; }
+"*"		{ col += yyleng; return MUL; }
+"^T"	{ col += yyleng; return TRANSPOSE; }
+[0-9]+	{ col += yyleng; yylval.ival= atoi(yytext);  return NUM; }
+[ \t]+	{ col += yyleng;}	
+\n		{}
+. 		{ return yytext[0]; }
 
 %%

@@ -67,39 +67,39 @@
       know about them.  */
    enum yytokentype {
      NUM = 258,
-     LSBR = 259,
-     RSBR = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
-     TRANSPOSE = 264,
-     LPAR = 265,
-     RPAR = 266
+     ADD_SUB = 259,
+     MUL = 260,
+     TRS = 261,
+     LRBR = 262,
+     RRBR = 263,
+     LSBR = 264,
+     RSBR = 265
    };
 #endif
 /* Tokens.  */
 #define NUM 258
-#define LSBR 259
-#define RSBR 260
-#define ADD 261
-#define SUB 262
-#define MUL 263
-#define TRANSPOSE 264
-#define LPAR 265
-#define RPAR 266
+#define ADD_SUB 259
+#define MUL 260
+#define TRS 261
+#define LRBR 262
+#define RRBR 263
+#define LSBR 264
+#define RSBR 265
 
 
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "matrix_calculator.y"
+#line 1 "a.y"
 
-    #include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 
-    extern int col;
-    int yylex(void);
-    void yyerror(const char *msg);
-    void semantic_error();
+int yylex();
+void yyerror(const char *message);
+void sematic_error(int col);
 
 
 /* Enabling traces.  */
@@ -122,14 +122,14 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "matrix_calculator.y"
+#line 12 "a.y"
 {
-    int ival;
-    int loc;
-    struct def {
-        int i;
-        int j;
-    } Matrix;
+int 	ival;
+int 	loc;
+struct def{
+	int i;
+	int j;
+	} mat;
 }
 /* Line 193 of yacc.c.  */
 #line 136 "y.tab.c"
@@ -360,20 +360,20 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   21
+#define YYLAST   18
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  13
+#define YYNTOKENS  12
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  7
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  19
+#define YYNSTATES  17
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   266
+#define YYMAXUTOK   265
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -385,7 +385,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    12,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,    11,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -407,7 +407,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10
 };
 
 #if YYDEBUG
@@ -415,21 +415,21 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,    11,    15,    19,    23,    26
+       0,     0,     3,     5,    11,    15,    19,    22
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      14,     0,    -1,    15,    -1,     4,     3,    12,     3,     5,
-      -1,    15,     6,    15,    -1,    15,     7,    15,    -1,    15,
-       8,    15,    -1,    15,     9,    -1,    10,    15,    11,    -1
+      13,     0,    -1,    14,    -1,     9,     3,    11,     3,    10,
+      -1,    14,     4,    14,    -1,    14,     5,    14,    -1,    14,
+       6,    -1,     7,    14,     8,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    30,    31,    44,    57,    69,    70
+       0,    36,    36,    37,    38,    44,    48,    49
 };
 #endif
 
@@ -438,8 +438,8 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NUM", "LSBR", "RSBR", "ADD", "SUB",
-  "MUL", "TRANSPOSE", "LPAR", "RPAR", "','", "$accept", "line", "matrix", 0
+  "$end", "error", "$undefined", "NUM", "ADD_SUB", "MUL", "TRS", "LRBR",
+  "RRBR", "LSBR", "RSBR", "','", "$accept", "line", "matrix", 0
 };
 #endif
 
@@ -449,20 +449,20 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,    44
+     265,    44
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    13,    14,    15,    15,    15,    15,    15,    15
+       0,    12,    13,    14,    14,    14,    14,    14
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     5,     3,     3,     3,     2,     3
+       0,     2,     1,     5,     3,     3,     2,     3
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -471,7 +471,7 @@ static const yytype_uint8 yyr2[] =
 static const yytype_uint8 yydefact[] =
 {
        0,     0,     0,     0,     2,     0,     0,     1,     0,     0,
-       0,     7,     0,     8,     4,     5,     6,     0,     3
+       6,     7,     0,     4,     5,     0,     3
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -485,14 +485,14 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -6
 static const yytype_int8 yypact[] =
 {
-      -1,     1,    -1,     5,    10,     2,     4,    -6,    -1,    -1,
-      -1,    -6,    17,    -6,    -6,    -6,    -5,    16,    -6
+       6,     6,     1,    12,     5,    -3,    -5,    -6,     6,     6,
+      -6,    -6,    11,    -6,    13,     8,    -6
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -2
+      -6,    -6,    -1
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -502,24 +502,22 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       6,     8,     9,     1,     5,     7,    14,    15,    16,     2,
-       8,     9,    10,    11,    12,    13,     8,     9,    10,    11,
-      17,    18
+       5,     8,     9,    10,     6,    11,    12,    13,    14,     8,
+       9,    10,     7,     1,    15,     2,     0,     8,    16
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       2,     6,     7,     4,     3,     0,     8,     9,    10,    10,
-       6,     7,     8,     9,    12,    11,     6,     7,     8,     9,
-       3,     5
+       1,     4,     5,     6,     3,     8,    11,     8,     9,     4,
+       5,     6,     0,     7,     3,     9,    -1,     4,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     4,    10,    14,    15,     3,    15,     0,     6,     7,
-       8,     9,    12,    11,    15,    15,    15,     3,     5
+       0,     7,     9,    13,    14,    14,     3,     0,     4,     5,
+       6,     8,    11,    14,    14,     3,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1334,75 +1332,46 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 29 "matrix_calculator.y"
-    {printf("Accepted\n"); return 0;;}
+#line 36 "a.y"
+    {printf("%d %d\n",(yyvsp[(1) - (1)].mat).i,(yyvsp[(1) - (1)].mat).j); return 0;;}
     break;
 
   case 3:
-#line 30 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(2) - (5)].ival),(yyval.Matrix).j = (yyvsp[(4) - (5)].ival); ;}
+#line 37 "a.y"
+    {(yyval.mat).i=(yyvsp[(2) - (5)].ival),(yyval.mat).j=(yyvsp[(4) - (5)].ival);;}
     break;
 
   case 4:
-#line 32 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i;
-                    (yyval.Matrix).j = (yyvsp[(1) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error();
-                    return 0;
-                }
-            ;}
+#line 38 "a.y"
+    {if((yyvsp[(1) - (3)].mat).i==(yyvsp[(3) - (3)].mat).i && (yyvsp[(1) - (3)].mat).j==(yyvsp[(3) - (3)].mat).j){
+											(yyval.mat).i = (yyvsp[(1) - (3)].mat).i;
+											(yyval.mat).j = (yyvsp[(1) - (3)].mat).j;}
+								else{sematic_error((yyvsp[(2) - (3)].loc));
+                                return 0;}
+                                ;}
     break;
 
   case 5:
-#line 45 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i;
-                    (yyval.Matrix).j = (yyvsp[(1) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error();
-                    return 0;
-                }
-            ;}
+#line 44 "a.y"
+    {if((yyvsp[(1) - (3)].mat).j==(yyvsp[(3) - (3)].mat).i){(yyval.mat).i = (yyvsp[(1) - (3)].mat).i; (yyval.mat).j = (yyvsp[(3) - (3)].mat).j;}
+                                else{sematic_error((yyvsp[(2) - (3)].loc));
+                                return 0;}
+                                ;}
     break;
 
   case 6:
-#line 58 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).i ) 
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(3) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error();
-                    return 0;
-                }
-            ;}
+#line 48 "a.y"
+    {(yyval.mat).i = (yyvsp[(1) - (2)].mat).j; (yyval.mat).j = (yyvsp[(1) - (2)].mat).i;;}
     break;
 
   case 7:
-#line 69 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(1) - (2)].Matrix).j; (yyval.Matrix).j = (yyvsp[(1) - (2)].Matrix).i; ;}
-    break;
-
-  case 8:
-#line 70 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(2) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(2) - (3)].Matrix).j; ;}
+#line 49 "a.y"
+    {(yyval.mat).i = (yyvsp[(2) - (3)].mat).i; (yyval.mat).j = (yyvsp[(2) - (3)].mat).j;;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1406 "y.tab.c"
+#line 1375 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1616,21 +1585,17 @@ yyreturn:
 }
 
 
-#line 72 "matrix_calculator.y"
+#line 50 "a.y"
 
-
-void semantic_error(){
+void sematic_error(int col){
     printf("Semantic error on col %d\n", col);
 }
-
-void yyerror (const char *msg)
+void yyerror (const char *message)
 {
-    printf("Syntax Error\n");
+    fprintf (stderr, "%s\n",message);
 }
 
 int main(int argc, char *argv[]) {
         yyparse();
         return(0);
 }
-
-

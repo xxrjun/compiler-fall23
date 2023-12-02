@@ -69,14 +69,13 @@ typedef union YYSTYPE
 #line 10 "matrix_calculator.y"
 {
     int ival;
-    int loc;
     struct def {
         int i;
         int j;
     } Matrix;
 }
 /* Line 1529 of yacc.c.  */
-#line 80 "y.tab.h"
+#line 79 "matrix_calculator.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

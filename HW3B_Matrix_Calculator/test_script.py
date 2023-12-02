@@ -58,8 +58,8 @@ def compile_and_test(compilation_command, source_file, testcase_dir):
 # source_file = input("Enter the source file name: ")
 isMac = True
 compile_command = """
-bison -d -o y.tab.c matrix_calculator.y
-gcc -c -g -I. y.tab.c
+bison -d -o matrix_calculator.tab.c matrix_calculator.y
+gcc -c -g -I. matrix_calculator.tab.c
 lex -o lex.yy.c matrix_calculator.l
 gcc -c -g -I. lex.yy.c
 gcc -o matrix_calculator y.tab.o lex.yy.o -ll
