@@ -19,14 +19,16 @@
 %token <ival> NUM 
 %token LSBR RSBR ADD SUB MUL TRANSPOSE LPAR RPAR
 
-%left TRANSPOSE
-%left MUL
 %left ADD SUB
+%left MUL
+%right TRANSPOSE
+
 
 %%
 
-line : matrix {printf("Accepted\n"); return 0;}
+line : matrix { printf("Accepted\n"); return 0; }
 matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
+        | LPAR matrix RPAR      { $$.i = $2.i; $$.j = $2.j; }
         | matrix ADD matrix 
             {
                 if( $1.i == $3.i && $1.j == $3.j )
@@ -66,7 +68,6 @@ matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
                 }
             }
         | matrix TRANSPOSE      { $$.i = $1.j; $$.j = $1.i; }
-        | LPAR matrix RPAR      { $$.i = $2.i; $$.j = $2.j; }
 
 %%
 

@@ -359,7 +359,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   21
+#define YYLAST   23
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  13
@@ -414,21 +414,21 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,    11,    15,    19,    23,    26
+       0,     0,     3,     5,    11,    15,    19,    23,    27
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
       14,     0,    -1,    15,    -1,     4,     3,    12,     3,     5,
-      -1,    15,     6,    15,    -1,    15,     7,    15,    -1,    15,
-       8,    15,    -1,    15,     9,    -1,    10,    15,    11,    -1
+      -1,    10,    15,    11,    -1,    15,     6,    15,    -1,    15,
+       7,    15,    -1,    15,     8,    15,    -1,    15,     9,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    28,    28,    29,    30,    43,    56,    68,    69
+       0,    29,    29,    30,    31,    32,    45,    58,    70
 };
 #endif
 
@@ -461,7 +461,7 @@ static const yytype_uint8 yyr1[] =
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     5,     3,     3,     3,     2,     3
+       0,     2,     1,     5,     3,     3,     3,     3,     2
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -470,7 +470,7 @@ static const yytype_uint8 yyr2[] =
 static const yytype_uint8 yydefact[] =
 {
        0,     0,     0,     0,     2,     0,     0,     1,     0,     0,
-       0,     7,     0,     8,     4,     5,     6,     0,     3
+       0,     8,     0,     4,     5,     6,     7,     0,     3
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -481,17 +481,17 @@ static const yytype_int8 yydefgoto[] =
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -6
+#define YYPACT_NINF -8
 static const yytype_int8 yypact[] =
 {
-      -1,     1,    -1,     5,    10,     2,     4,    -6,    -1,    -1,
-      -1,    -6,    17,    -6,    -6,    -6,    -5,    16,    -6
+      -1,     1,    -1,     5,    10,     2,     4,    -8,    -1,    -1,
+      -1,    -8,    17,    -8,    -7,    -7,    12,    18,    -8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -2
+      -8,    -8,    -2
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -501,16 +501,16 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       6,     8,     9,     1,     5,     7,    14,    15,    16,     2,
+       6,    10,    11,     1,     5,     7,    14,    15,    16,     2,
        8,     9,    10,    11,    12,    13,     8,     9,    10,    11,
-      17,    18
+      17,    11,     0,    18
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       2,     6,     7,     4,     3,     0,     8,     9,    10,    10,
+       2,     8,     9,     4,     3,     0,     8,     9,    10,    10,
        6,     7,     8,     9,    12,    11,     6,     7,     8,     9,
-       3,     5
+       3,     9,    -1,     5
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -1333,33 +1333,22 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 28 "matrix_calculator.y"
-    {printf("Accepted\n"); return 0;;}
+#line 29 "matrix_calculator.y"
+    { printf("Accepted\n"); return 0; ;}
     break;
 
   case 3:
-#line 29 "matrix_calculator.y"
+#line 30 "matrix_calculator.y"
     { (yyval.Matrix).i = (yyvsp[(2) - (5)].ival),(yyval.Matrix).j = (yyvsp[(4) - (5)].ival); ;}
     break;
 
   case 4:
 #line 31 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i;
-                    (yyval.Matrix).j = (yyvsp[(1) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error();
-                    return 0;
-                }
-            ;}
+    { (yyval.Matrix).i = (yyvsp[(2) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(2) - (3)].Matrix).j; ;}
     break;
 
   case 5:
-#line 44 "matrix_calculator.y"
+#line 33 "matrix_calculator.y"
     {
                 if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
                 {
@@ -1375,7 +1364,23 @@ yyreduce:
     break;
 
   case 6:
-#line 57 "matrix_calculator.y"
+#line 46 "matrix_calculator.y"
+    {
+                if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
+                {
+                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i;
+                    (yyval.Matrix).j = (yyvsp[(1) - (3)].Matrix).j;
+                }
+                else 
+                {
+                    semantic_error();
+                    return 0;
+                }
+            ;}
+    break;
+
+  case 7:
+#line 59 "matrix_calculator.y"
     {
                 if( (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).i ) 
                 {
@@ -1389,14 +1394,9 @@ yyreduce:
             ;}
     break;
 
-  case 7:
-#line 68 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(1) - (2)].Matrix).j; (yyval.Matrix).j = (yyvsp[(1) - (2)].Matrix).i; ;}
-    break;
-
   case 8:
-#line 69 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(2) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(2) - (3)].Matrix).j; ;}
+#line 70 "matrix_calculator.y"
+    { (yyval.Matrix).i = (yyvsp[(1) - (2)].Matrix).j; (yyval.Matrix).j = (yyvsp[(1) - (2)].Matrix).i; ;}
     break;
 
 
@@ -1615,7 +1615,7 @@ yyreturn:
 }
 
 
-#line 71 "matrix_calculator.y"
+#line 72 "matrix_calculator.y"
 
 
 void semantic_error(){
