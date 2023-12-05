@@ -42,24 +42,26 @@
      NUM = 258,
      LSBR = 259,
      RSBR = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
-     TRANSPOSE = 264,
-     LPAR = 265,
-     RPAR = 266
+     TRANSPOSE = 261,
+     LPAR = 262,
+     RPAR = 263,
+     COMMA = 264,
+     ADD = 265,
+     SUB = 266,
+     MUL = 267
    };
 #endif
 /* Tokens.  */
 #define NUM 258
 #define LSBR 259
 #define RSBR 260
-#define ADD 261
-#define SUB 262
-#define MUL 263
-#define TRANSPOSE 264
-#define LPAR 265
-#define RPAR 266
+#define TRANSPOSE 261
+#define LPAR 262
+#define RPAR 263
+#define COMMA 264
+#define ADD 265
+#define SUB 266
+#define MUL 267
 
 
 
@@ -69,13 +71,14 @@ typedef union YYSTYPE
 #line 10 "matrix_calculator.y"
 {
     int ival;
+    int loc;
     struct def {
         int i;
         int j;
     } Matrix;
 }
 /* Line 1529 of yacc.c.  */
-#line 79 "matrix_calculator.tab.h"
+#line 82 "matrix_calculator.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

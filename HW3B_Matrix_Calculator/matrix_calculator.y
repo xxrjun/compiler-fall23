@@ -1,14 +1,13 @@
 %{
     #include <stdio.h>
-
-    extern int col;
     int yylex(void);
     void yyerror(const char *msg);
-    void semantic_error();
+    void semantic_error(const int col);
 %}
 
 %union {
     int ival;
+    int loc;
     struct def {
         int i;
         int j;
@@ -17,17 +16,18 @@
 
 %type <Matrix> matrix
 %token <ival> NUM 
-%token LSBR RSBR ADD SUB MUL TRANSPOSE LPAR RPAR
+%token LSBR RSBR TRANSPOSE LPAR RPAR COMMA
+%token <loc> ADD SUB MUL 
 
 %left ADD SUB
 %left MUL
-%right TRANSPOSE
+%left TRANSPOSE
 
 
 %%
 
-line : matrix { printf("Accepted\n"); return 0; }
-matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
+line    : matrix { printf("Accepted\n"); return 0; }
+matrix  : LSBR NUM COMMA NUM RSBR { $$.i = $2,$$.j = $4; }
         | LPAR matrix RPAR      { $$.i = $2.i; $$.j = $2.j; }
         | matrix ADD matrix 
             {
@@ -38,8 +38,8 @@ matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
                 }
                 else 
                 {
-                    semantic_error();
-                    return 0;
+                    semantic_error($2);
+                    YYABORT;
                 }
             }
         | matrix SUB matrix 
@@ -51,8 +51,8 @@ matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
                 }
                 else 
                 {
-                    semantic_error();
-                    return 0;
+                    semantic_error($2);
+                    YYABORT;
                 }
             }
         | matrix MUL matrix     
@@ -63,15 +63,16 @@ matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
                 }
                 else 
                 {
-                    semantic_error();
-                    return 0;
+                    semantic_error($2);
+                    YYABORT;
                 }
             }
         | matrix TRANSPOSE      { $$.i = $1.j; $$.j = $1.i; }
-
+        | matrix
+      
 %%
 
-void semantic_error(){
+void semantic_error(const int col){
     printf("Semantic error on col %d\n", col);
 }
 
