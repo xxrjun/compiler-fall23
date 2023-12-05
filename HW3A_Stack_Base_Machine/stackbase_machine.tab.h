@@ -38,15 +38,14 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     NUM = 258,
-     LSBR = 259,
-     RSBR = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
-     TRANSPOSE = 264,
-     LPAR = 265,
-     RPAR = 266
+     INTEGER = 258,
+     ADD = 259,
+     SUB = 260,
+     MUL = 261,
+     MOD = 262,
+     INC = 263,
+     DEC = 264,
+     LOAD = 265
    };
 #endif
 
@@ -57,19 +56,14 @@ typedef union YYSTYPE
 {
 
 /* Line 1685 of yacc.c  */
-#line 11 "matrix_calculator.y"
+#line 12 "stackbase_machine.y"
 
     int ival;
-    int loc;
-    struct def {
-        int i;
-        int j;
-    } Matrix;
 
 
 
 /* Line 1685 of yacc.c  */
-#line 73 "matrix_calculator.tab.h"
+#line 67 "stackbase_machine.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -79,3 +73,12 @@ typedef union YYSTYPE
 extern YYSTYPE yylval;
 
 
+/* "%code provides" blocks.  */
+
+/* Line 1685 of yacc.c  */
+#line 10 "stackbase_machine.y"
+
+
+
+/* Line 1685 of yacc.c  */
+#line 85 "stackbase_machine.tab.h"

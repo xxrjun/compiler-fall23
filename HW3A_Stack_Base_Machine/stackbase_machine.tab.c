@@ -67,19 +67,18 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 189 of yacc.c  */
-#line 1 "matrix_calculator.y"
+#line 1 "stackbase_machine.y"
 
-    #include <stdio.h>
+    # include <stack>
 
-    extern int col;
-    extern int token_start;
     int yylex(void);
-    void yyerror(const char *msg);
-    void semantic_error(const int col);
+    void yyerror(const char *);
+
+    std::stack<int> s;
 
 
 /* Line 189 of yacc.c  */
-#line 83 "matrix_calculator.tab.c"
+#line 82 "stackbase_machine.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -106,15 +105,14 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     NUM = 258,
-     LSBR = 259,
-     RSBR = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
-     TRANSPOSE = 264,
-     LPAR = 265,
-     RPAR = 266
+     INTEGER = 258,
+     ADD = 259,
+     SUB = 260,
+     MUL = 261,
+     MOD = 262,
+     INC = 263,
+     DEC = 264,
+     LOAD = 265
    };
 #endif
 
@@ -125,31 +123,35 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 11 "matrix_calculator.y"
+#line 12 "stackbase_machine.y"
 
     int ival;
-    int loc;
-    struct def {
-        int i;
-        int j;
-    } Matrix;
 
 
 
 /* Line 214 of yacc.c  */
-#line 141 "matrix_calculator.tab.c"
+#line 134 "stackbase_machine.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* "%code provides" blocks.  */
+
+/* Line 261 of yacc.c  */
+#line 10 "stackbase_machine.y"
+
+
+
+/* Line 261 of yacc.c  */
+#line 149 "stackbase_machine.tab.c"
 
 /* Copy the second part of user declarations.  */
 
 
 /* Line 264 of yacc.c  */
-#line 153 "matrix_calculator.tab.c"
+#line 155 "stackbase_machine.tab.c"
 
 #ifdef short
 # undef short
@@ -362,22 +364,22 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  7
+#define YYFINAL  14
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   23
+#define YYLAST   11
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  13
+#define YYNTOKENS  12
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  14
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  19
+#define YYNSTATES  17
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   266
+#define YYMAXUTOK   265
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -386,10 +388,10 @@ union yyalloc
 static const yytype_uint8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      11,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    12,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -411,7 +413,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10
 };
 
 #if YYDEBUG
@@ -419,21 +421,24 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,    11,    15,    19,    23,    27
+       0,     0,     3,     5,     8,    10,    13,    15,    17,    20,
+      22,    24,    26,    28,    30
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      14,     0,    -1,    15,    -1,     4,     3,    12,     3,     5,
-      -1,    10,    15,    11,    -1,    15,     6,    15,    -1,    15,
-       7,    15,    -1,    15,     8,    15,    -1,    15,     9,    -1
+      13,     0,    -1,    14,    -1,    14,    15,    -1,    15,    -1,
+      16,    11,    -1,    16,    -1,    11,    -1,    10,     3,    -1,
+       4,    -1,     5,    -1,     6,    -1,     7,    -1,     8,    -1,
+       9,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    32,    33,    34,    47,    60,    72
+       0,    28,    28,    36,    37,    39,    40,    41,    44,    45,
+      58,    71,    84,    97,   108
 };
 #endif
 
@@ -442,8 +447,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NUM", "LSBR", "RSBR", "ADD", "SUB",
-  "MUL", "TRANSPOSE", "LPAR", "RPAR", "','", "$accept", "line", "matrix", 0
+  "$end", "error", "$undefined", "INTEGER", "ADD", "SUB", "MUL", "MOD",
+  "INC", "DEC", "LOAD", "'\\n'", "$accept", "program", "lines", "line",
+  "expr", 0
 };
 #endif
 
@@ -453,20 +459,22 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,    44
+     265,    10
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    13,    14,    15,    15,    15,    15,    15,    15
+       0,    12,    13,    14,    14,    15,    15,    15,    16,    16,
+      16,    16,    16,    16,    16
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     5,     3,     3,     3,     3,     2
+       0,     2,     1,     2,     1,     2,     1,     1,     2,     1,
+       1,     1,     1,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -474,29 +482,29 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     0,     2,     0,     0,     1,     0,     0,
-       0,     8,     0,     4,     5,     6,     7,     0,     3
+       0,     9,    10,    11,    12,    13,    14,     0,     7,     0,
+       2,     4,     6,     8,     1,     3,     5
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,     4
+      -1,     9,    10,    11,    12
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -8
+#define YYPACT_NINF -5
 static const yytype_int8 yypact[] =
 {
-      -1,     1,    -1,     5,    10,     2,     4,    -8,    -1,    -1,
-      -1,    -8,    17,    -8,    -7,    -7,    12,    18,    -8
+      -4,    -5,    -5,    -5,    -5,    -5,    -5,     5,    -5,     9,
+      -4,    -5,    -1,    -5,    -5,    -5,    -5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -8,    -8,    -2
+      -5,    -5,    -5,     1,    -5
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -506,24 +514,22 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       6,    10,    11,     1,     5,     7,    14,    15,    16,     2,
-       8,     9,    10,    11,    12,    13,     8,     9,    10,    11,
-      17,    11,     0,    18
+       1,     2,     3,     4,     5,     6,     7,     8,    13,    14,
+      16,    15
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       2,     8,     9,     4,     3,     0,     8,     9,    10,    10,
-       6,     7,     8,     9,    12,    11,     6,     7,     8,     9,
-       3,     9,    -1,     5
+       4,     5,     6,     7,     8,     9,    10,    11,     3,     0,
+      11,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     4,    10,    14,    15,     3,    15,     0,     6,     7,
-       8,     9,    12,    11,    15,    15,    15,     3,     5
+       0,     4,     5,     6,     7,     8,     9,    10,    11,    13,
+      14,    15,    16,     3,     0,    15,    11
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1346,88 +1352,173 @@ yyreduce:
         case 2:
 
 /* Line 1464 of yacc.c  */
-#line 31 "matrix_calculator.y"
-    { printf("Accepted\n"); return 0; ;}
+#line 28 "stackbase_machine.y"
+    {
+                            if (s.size() != 1) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else
+                                std::cout << s.top() << std::endl;
+                        ;}
     break;
 
   case 3:
 
 /* Line 1464 of yacc.c  */
-#line 32 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(2) - (5)].ival),(yyval.Matrix).j = (yyvsp[(4) - (5)].ival); ;}
+#line 36 "stackbase_machine.y"
+    {;;}
     break;
 
   case 4:
 
 /* Line 1464 of yacc.c  */
-#line 33 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(2) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(2) - (3)].Matrix).j; ;}
+#line 37 "stackbase_machine.y"
+    {;;}
     break;
 
   case 5:
 
 /* Line 1464 of yacc.c  */
-#line 35 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i;
-                    (yyval.Matrix).j = (yyvsp[(1) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error((yyvsp[(2) - (3)].loc));
-                    return 0;
-                }
-            ;}
+#line 39 "stackbase_machine.y"
+    {;;}
     break;
 
   case 6:
 
 /* Line 1464 of yacc.c  */
-#line 48 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).i == (yyvsp[(3) - (3)].Matrix).i && (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).j )
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i;
-                    (yyval.Matrix).j = (yyvsp[(1) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error((yyvsp[(2) - (3)].loc));
-                    return 0;
-                }
-            ;}
+#line 40 "stackbase_machine.y"
+    {;;}
     break;
 
   case 7:
 
 /* Line 1464 of yacc.c  */
-#line 61 "matrix_calculator.y"
-    {
-                if( (yyvsp[(1) - (3)].Matrix).j == (yyvsp[(3) - (3)].Matrix).i ) 
-                {
-                    (yyval.Matrix).i = (yyvsp[(1) - (3)].Matrix).i; (yyval.Matrix).j = (yyvsp[(3) - (3)].Matrix).j;
-                }
-                else 
-                {
-                    semantic_error((yyvsp[(2) - (3)].loc));
-                    return 0;
-                }
-            ;}
+#line 41 "stackbase_machine.y"
+    {;;}
     break;
 
   case 8:
 
 /* Line 1464 of yacc.c  */
-#line 72 "matrix_calculator.y"
-    { (yyval.Matrix).i = (yyvsp[(1) - (2)].Matrix).j; (yyval.Matrix).j = (yyvsp[(1) - (2)].Matrix).i; ;}
+#line 44 "stackbase_machine.y"
+    {s.push((yyvsp[(2) - (2)].ival));;}
+    break;
+
+  case 9:
+
+/* Line 1464 of yacc.c  */
+#line 45 "stackbase_machine.y"
+    {
+                            if (s.size() < 2) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else {
+                                int a = s.top();
+                                s.pop();
+                                int b = s.top();
+                                s.pop;
+                                s.push(a + b);
+                            }
+                        ;}
+    break;
+
+  case 10:
+
+/* Line 1464 of yacc.c  */
+#line 58 "stackbase_machine.y"
+    {
+                            if (s.size() < 2) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else {
+                                int a = s.top();
+                                s.pop();
+                                int b = s.top();
+                                s.pop();
+                                s.push(a - b);
+                            }
+                        ;}
+    break;
+
+  case 11:
+
+/* Line 1464 of yacc.c  */
+#line 71 "stackbase_machine.y"
+    {
+                            if (s.size() < 2) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else {
+                                int a = s.top();
+                                s.pop();
+                                int b = s.top();
+                                s.pop();
+                                s.push(a * b);
+                            }
+                        ;}
+    break;
+
+  case 12:
+
+/* Line 1464 of yacc.c  */
+#line 84 "stackbase_machine.y"
+    {
+                            if (s.size() < 2) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else {
+                                int a = s.top();
+                                s.pop();
+                                int b = s.top();
+                                s.pop();
+                                s.push(a % b);
+                            }
+                        ;}
+    break;
+
+  case 13:
+
+/* Line 1464 of yacc.c  */
+#line 97 "stackbase_machine.y"
+    {
+                            if (s.size() < 1) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else {
+                                int a = s.top();
+                                s.pop();
+                                s.push(++a);
+                            }
+                        ;}
+    break;
+
+  case 14:
+
+/* Line 1464 of yacc.c  */
+#line 108 "stackbase_machine.y"
+    {
+                            if (s.size() < 1) {
+                                std::cout << "Invalid format" << std::endl;
+                                exit(0);
+                            }
+                            else {
+                                int a = s.top();
+                                s.pop();
+                                s.push(--a);
+                            }
+                        ;}
     break;
 
 
 
 /* Line 1464 of yacc.c  */
-#line 1431 "matrix_calculator.tab.c"
+#line 1522 "stackbase_machine.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1639,21 +1730,15 @@ yyreturn:
 
 
 /* Line 1684 of yacc.c  */
-#line 74 "matrix_calculator.y"
+#line 121 "stackbase_machine.y"
 
 
-void semantic_error(const int col){
-    printf("Semantic error on col %d\n", token_start);
+void yyerror(const char *message) {
+    std::cout << "Invalid format" << std::endl;
 }
 
-void yyerror (const char *msg)
-{
-    printf("Syntax Error\n");
+int main(void) {
+    yyparse();
+    return 0;
 }
-
-int main(int argc, char *argv[]) {
-        yyparse();
-        return(0);
-}
-
 

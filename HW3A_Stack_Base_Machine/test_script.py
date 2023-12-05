@@ -61,15 +61,15 @@ def compile_and_test(compilation_command, source_file, testcase_dir):
 # source_file = input("Enter the source file name: ")
 isMac = False
 compile_command = """
-bison -d -o matrix_calculator.tab.c matrix_calculator.y
-gcc -c -g -I. matrix_calculator.tab.c
-lex -o lex.yy.c matrix_calculator.l
+bison -d -o stackbase_machine.tab.c stackbase_machine.y
+gcc -c -g -I. stackbase_machine.tab.c
+lex -o lex.yy.c stackbase_machine.l
 gcc -c -g -I. lex.
-gcc -o matrix_calculator matrix_calculator.tab.o lex.yy.o -ll
+gcc -o stackbase_machine stackbase_machine.tab.o lex.yy.o -ll
 """ if isMac else """
 script.sh
 """
-source_file = "matrix_calculator" 
+source_file = "stackbase_machine" 
 testcase_dir = "testcases"
 
 compile_and_test(compile_command, source_file, testcase_dir)

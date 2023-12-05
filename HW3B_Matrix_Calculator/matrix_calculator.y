@@ -2,6 +2,7 @@
     #include <stdio.h>
 
     extern int col;
+    extern int token_start;
     int yylex(void);
     void yyerror(const char *msg);
     void semantic_error();
@@ -71,8 +72,8 @@ matrix  : LSBR NUM ',' NUM RSBR { $$.i = $2,$$.j = $4; }
 
 %%
 
-void semantic_error(){
-    printf("Semantic error on col %d\n", col);
+void semantic_error(const int col){
+    printf("Semantic error on col %d\n", token_start);
 }
 
 void yyerror (const char *msg)
