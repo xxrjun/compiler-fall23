@@ -1,6 +1,7 @@
 %{
 	#include "matrix_calculator.tab.h"
-	int col = 0;
+	int col = 1;
+	int token_start = 1; // Track start of the token
 %}
 
 

@@ -1,5 +1,11 @@
 %{
     #include <stdio.h>
+<<<<<<< HEAD
+=======
+
+    extern int col;
+    extern int token_start;
+>>>>>>> c81cdff6492eedab9835f2dd8f974c39f176d45b
     int yylex(void);
     void yyerror(const char *msg);
     void semantic_error(const int col);
