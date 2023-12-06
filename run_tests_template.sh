@@ -90,4 +90,4 @@ done
 
 echo -e "${COLOR_YELLOW}Tests completed.${COLOR_RESET} ${COLOR_GREEN}Passed: $PASSED${COLOR_RESET}, ${COLOR_RED}Failed: $FAILED${COLOR_RESET}"
 
-rm -f *.o lex.yy.c ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.tab.h
+rm -f *.o lex.yy.c ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.tab.h *.exe
