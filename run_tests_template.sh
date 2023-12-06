@@ -77,6 +77,8 @@ for test_file in $TEST_DIR/*.in; do
         ((PASSED++))
     else
         echo -e "${COLOR_RED}Result: FAIL${COLOR_RESET}"
+        echo "Input:"
+        echo -e "${COLOR_BLUE}$(cat $test_file)${COLOR_RESET}"
         echo "Expected Output:"
         echo -e "${COLOR_RED}$expected_output${COLOR_RESET}"
         echo "Actual Output:"

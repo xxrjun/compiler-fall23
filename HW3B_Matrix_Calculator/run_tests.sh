@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TEST_DIR="./testcases"
-PROGRAM_NAME="matrix_calculator"
+PROGRAM_NAME="stackbase_machine"
 PASSED=0
 FAILED=0
 
@@ -63,7 +63,7 @@ for test_file in $TEST_DIR/*.in; do
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         actual_output=$(./"$PROGRAM_NAME" < "$test_file")
     elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
-        # 在 Windows 上運行時，確保程序名稱包含.exe
+rm -f *.o lex.yy.c ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.tab.h *.exe
         actual_output=$(./"$PROGRAM_NAME.exe" < "$test_file") 
     else
         echo "Unsupported operating system"
@@ -77,6 +77,8 @@ for test_file in $TEST_DIR/*.in; do
         ((PASSED++))
     else
         echo -e "${COLOR_RED}Result: FAIL${COLOR_RESET}"
+        echo "Input:"
+        echo -e "${COLOR_BLUE}$(cat $test_file)${COLOR_RESET}"
         echo "Expected Output:"
         echo -e "${COLOR_RED}$expected_output${COLOR_RESET}"
         echo "Actual Output:"
