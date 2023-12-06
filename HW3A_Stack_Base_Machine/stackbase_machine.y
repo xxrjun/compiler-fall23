@@ -1,130 +1,78 @@
 %{
-    # include <stack>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-    int yylex(void);
-    void yyerror(const char *);
-
-    std::stack<int> s;
+    #define MAX_STACK_SIZE 10000
+    int stack[MAX_STACK_SIZE];
+    int ptr = -1;
+    
+    int yylex();
+    void yyerror(char *s);
+    void push(int num);
+    int pop();
+    int is_empty();
 %}
 
-%code provides {}
-
-%union{
-    int ival;
-}
-
-/* declarations */
-%token <ival> INTEGER
-%token ADD
-%token SUB
-%token MUL
-%token MOD
-%token INC
-%token DEC
-%token LOAD
-%type <ival> expr
-
-%%
-program : lines         {
-                            if (s.size() != 1) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else
-                                std::cout << s.top() << std::endl;
-                        }
-lines   : lines line    {;}
-        | line          {;}
-        ;
-line    : expr '\n'     {;}
-        | expr          {;}
-        | '\n'          {;}
-        ;
-
-expr    : LOAD INTEGER  {s.push($2);}
-        | ADD           {
-                            if (s.size() < 2) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else {
-                                int a = s.top();
-                                s.pop();
-                                int b = s.top();
-                                s.pop;
-                                s.push(a + b);
-                            }
-                        }
-        | SUB           {
-                            if (s.size() < 2) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else {
-                                int a = s.top();
-                                s.pop();
-                                int b = s.top();
-                                s.pop();
-                                s.push(a - b);
-                            }
-                        }
-        | MUL           {
-                            if (s.size() < 2) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else {
-                                int a = s.top();
-                                s.pop();
-                                int b = s.top();
-                                s.pop();
-                                s.push(a * b);
-                            }
-                        }
-        | MOD           {
-                            if (s.size() < 2) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else {
-                                int a = s.top();
-                                s.pop();
-                                int b = s.top();
-                                s.pop();
-                                s.push(a % b);
-                            }
-                        }
-        | INC           {
-                            if (s.size() < 1) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else {
-                                int a = s.top();
-                                s.pop();
-                                s.push(++a);
-                            }
-                        }
-        | DEC           {
-                            if (s.size() < 1) {
-                                std::cout << "Invalid format" << std::endl;
-                                exit(0);
-                            }
-                            else {
-                                int a = s.top();
-                                s.pop();
-                                s.push(--a);
-                            }
-                        }
-        ;
+%token NUM LOAD ADD SUB MUL INC DEC EOL MOD
+%start program
 
 %%
 
-void yyerror(const char *message) {
-    std::cout << "Invalid format" << std::endl;
+program 
+    : {/* empty */}
+    | program line {
+                    if(ptr != 0){
+                        yyerror("Invalid foramt\n");
+                        YYABORT;        
+                    } else {
+                        printf("%d\n", pop());
+                    }
+                }
+    ; 
+
+line 
+    :  instruction EOL
+    ;
+
+instruction 
+    : LOAD NUM {push($2);}
+    | ADD NUM {push(pop() + $2);}
+    | SUB NUM {push(pop() - $2);}
+    | MUL NUM {push(pop() * $2);}
+    | MOD {push(pop() % 1);}
+    | INC {push(pop() + 1);}
+    | DEC {push(pop() - 1);}
+    | {yyerror("Invalid format\n"); YYABORT;}
+    ;
+%%
+
+void push(int num){
+    if (ptr >= MAX_STACK_SIZE){
+        yyerror("Invalid format\n"); 
+        exit(1);       
+    } else {
+        stack[++ptr] = num;
+    }
 }
 
-int main(void) {
+int pop(){
+    if (is_empty()){
+        yyerror("Invalid format\n"); 
+        exit(1);
+    } else {
+        return stack[ptr--];
+    }
+}
+
+int is_empty(){
+    return ptr == -1;
+}
+
+int main(int argc, char **argv){
     yyparse();
     return 0;
+}
+
+void yyerror(char *s){
+    printf("%s\n", s);
 }
