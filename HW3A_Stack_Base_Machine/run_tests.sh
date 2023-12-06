@@ -23,24 +23,52 @@ echo -e "${COLOR_BRIGHT_BLUE}|        NCU Compilers Homework, 2023 Fall       |$
 echo -e "${COLOR_BRIGHT_BLUE}|                   Test Script                  |${COLOR_RESET}"
 echo -e "${COLOR_BRIGHT_BLUE}+------------------------------------------------+${COLOR_RESET}"
 
-bison -d -o ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.y
-gcc -c -g -I. ${PROGRAM_NAME}.tab.c
-lex -o lex.yy.c ${PROGRAM_NAME}.l
-gcc -c -g -I. lex.yy.c
-gcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o
+# 選擇不同系統的指令
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux 系統的指令
+    echo "Running on Linux"
 
-# Check whether the program exists
-if [ ! -f "$PROGRAM_NAME" ]; then
-    echo -e "${COLOR_RED}Error: $PROGRAM_NAME not found.${COLOR_RESET}"
-    exit 1
+    bison -d -o ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.y
+    gcc -c -g -I. ${PROGRAM_NAME}.tab.c
+    lex -o lex.yy.c ${PROGRAM_NAME}.l
+    gcc -c -g -I. lex.yy.c
+    gcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o -llgcc -o matrix_calculator matrix_calculator.tab.o lex.yy.o
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS 系統的指令
+    echo "Running on macOS"
+    bison -d -o ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.y
+    gcc -c -g -I. ${PROGRAM_NAME}.tab.c
+    lex -o lex.yy.c ${PROGRAM_NAME}.l
+    gcc -c -g -I. lex.yy.c
+    gcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o -ll
+elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
+    # Windows 系統的指令 (使用 Cygwin 或 Git Bash)
+    echo "Running on Windows (Cygwin or Git Bash)"
+
+    bison -d -o ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.y
+    gcc -c -g -I. ${PROGRAM_NAME}.tab.c
+    flex -o lex.yy.c ${PROGRAM_NAME}.l
+    gcc -c -g -I. lex.yy.c
+    gcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o
+else
+    echo "Unknown operating system"
 fi
 
+
 for test_file in $TEST_DIR/*.in; do
-    test_name=$(basename $test_file)
+    test_name=$(basename $test_file .in)  # Remove the .in extension
 
     # Extract the expected output from the answer file (.out)
-    expected_output=$(cat $TEST_DIR/$test_name.out)
-    actual_output=$(./"$PROGRAM_NAME" < $test_file)    
+    expected_output=$(cat "$TEST_DIR/$test_name.out" || echo "WRONGGG")
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        actual_output=$(./"$PROGRAM_NAME" < "$test_file")
+    elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
+        # 在 Windows 上運行時，確保程序名稱包含.exe
+        actual_output=$(./"$PROGRAM_NAME.exe" < "$test_file") 
+    else
+        echo "Unsupported operating system"
+        exit 1
+    fi
 
     echo -e "\033[36mTest: $test_name\033[0m"
 
@@ -58,6 +86,7 @@ for test_file in $TEST_DIR/*.in; do
 
     echo -e "\033[35m-----------------------------------\033[0m"
 done
+
 
 echo -e "${COLOR_YELLOW}Tests completed.${COLOR_RESET} ${COLOR_GREEN}Passed: $PASSED${COLOR_RESET}, ${COLOR_RED}Failed: $FAILED${COLOR_RESET}"
 
