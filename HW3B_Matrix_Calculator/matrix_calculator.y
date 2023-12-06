@@ -1,11 +1,5 @@
 %{
     #include <stdio.h>
-<<<<<<< HEAD
-=======
-
-    extern int col;
-    extern int token_start;
->>>>>>> c81cdff6492eedab9835f2dd8f974c39f176d45b
     int yylex(void);
     void yyerror(const char *msg);
     void semantic_error(const int col);
@@ -74,7 +68,6 @@ matrix  : LSBR NUM COMMA NUM RSBR { $$.i = $2,$$.j = $4; }
                 }
             }
         | matrix TRANSPOSE      { $$.i = $1.j; $$.j = $1.i; }
-        | matrix
       
 %%
 
