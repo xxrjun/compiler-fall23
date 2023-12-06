@@ -1,7 +1,7 @@
 %option noyywrap
 
 %{
-    #include <stackbase_machine.tab.h>
+    #include "stackbase_machine.tab.h"
     extern int yylval;
 %}
 
