@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TEST_DIR="./testcases"
-PROGRAM_NAME="matrix_calculator"
+TEST_DIR="./testcases" # TODO: Change this to your test directory
+PROGRAM_NAME="matrix_calculator" # TODO: Change this to your program name
 PASSED=0
 FAILED=0
 
