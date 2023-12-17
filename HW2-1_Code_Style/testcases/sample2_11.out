@@ -1,8 +1,0 @@
-int main(){ 
-    for(int i = 0; i < 10 ; i ++) // need 1 tab 
-    { // need 1 tab 
-        for(int j = 0 ; j <= i ; j ++) // need 2 tab 
-        printf(“*”); // need 2 tab 
-        printf(“\n”); // need 2 tab 
-    } // need 1 tab 
-} // need 0 tab 
