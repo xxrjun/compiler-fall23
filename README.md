@@ -58,23 +58,36 @@ gcc -o matrix_calculator y.tab.o lex.yy.o -ll
 
 [run_tests_template.sh](./run_tests_template.sh)
 
+Sample output 1
+
+<div >
+    <img src="./assets/run_test_script_console_all_passed.png" width="50%">
+</div>
+
+Sample output 2
+
+<div>
+    <img src="./assets/run_test_script_console_has_failed.png" width="50%">
+</div>
 
 ## AC Screenshot
 
 > 有些忘記截圖
 
+BA2
+
 - BA2 Second Question
 - BA2 Book Information
 
-
 <div>
-    <img src="./ac-screenshots/ba2.png" width="70%">
+    <img src="./assets/ac-screenshots/ba2.png" width="70%">
 </div>
+
+HW3
 
 - HW3-1 Stack Base Machine 
 - HW3-2 Matrix Calculator
 
 <div>
-    <img src="./ac-screenshots/hw3.png" width="70%">
-</div>
-    
+    <img src="./assets/ac-screenshots/hw3.png" width="70%">
+</div>    

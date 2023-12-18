@@ -20,7 +20,7 @@ clear
 # 顯示基本訊息
 echo -e "${COLOR_BRIGHT_BLUE}+------------------------------------------------+${COLOR_RESET}"
 echo -e "${COLOR_BRIGHT_BLUE}|        NCU Compilers Homework, 2023 Fall       |${COLOR_RESET}"
-echo -e "${COLOR_BRIGHT_BLUE}|                   Test Script                  |${COLOR_RESET}"
+echo -e "${COLOR_BRIGHT_BLUE}|             Test Script by @xxrjun             |${COLOR_RESET}"
 echo -e "${COLOR_BRIGHT_BLUE}+------------------------------------------------+${COLOR_RESET}"
 
 # 選擇不同系統的指令
