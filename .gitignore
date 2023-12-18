@@ -1078,4 +1078,4 @@ dkms.conf
 *.dis
 
 # output 
-*.out
+# *.out
