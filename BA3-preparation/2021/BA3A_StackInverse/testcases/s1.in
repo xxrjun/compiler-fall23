@@ -1,0 +1,10 @@
+push 1
+push 5
+dec
+inverse
+push 70
+inverse
+inc
+push 20
+inverse
+$

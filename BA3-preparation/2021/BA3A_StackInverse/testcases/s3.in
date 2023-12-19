@@ -1,0 +1,11 @@
+push 2
+push 18
+inverse
+push 66
+push 59
+dec
+push 3
+inverse
+push 78
+inverse
+$

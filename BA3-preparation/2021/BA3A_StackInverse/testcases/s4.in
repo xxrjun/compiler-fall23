@@ -1,0 +1,7 @@
+push 25
+push 95
+inc
+inverse
+push 152
+inverse
+$
