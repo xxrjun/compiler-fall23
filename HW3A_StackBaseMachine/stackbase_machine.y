@@ -19,11 +19,13 @@
 
 %%
 
-program 
-    : program line
-    | /* empty */
-    ; 
+program : lines
+        ;   
 
+lines: lines line
+        | line
+        ;
+        
 line 
     : instruction EOL
     ;
