@@ -58,6 +58,8 @@ gcc -o matrix_calculator y.tab.o lex.yy.o -ll
 
 [run_tests_template.sh](./run_tests_template.sh)
 
+此表本會自動偵測作業系統，包含 Mac, Linux, Windows。
+
 Sample output 1
 
 <div >

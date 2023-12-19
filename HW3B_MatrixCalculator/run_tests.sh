@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TEST_DIR="./testcases"
-PROGRAM_NAME="stackbase_machine"
+PROGRAM_NAME="matrix_calculator"
 PASSED=0
 FAILED=0
 
@@ -63,8 +63,9 @@ for test_file in $TEST_DIR/*.in; do
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         actual_output=$(./"$PROGRAM_NAME" < "$test_file")
     elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
-rm -f *.o lex.yy.c ${PROGRAM_NAME}.tab.c ${PROGRAM_NAME}.tab.h *.exe
         actual_output=$(./"$PROGRAM_NAME.exe" < "$test_file") 
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        actual_output=$(./"$PROGRAM_NAME" < "$test_file")
     else
         echo "Unsupported operating system"
         exit 1

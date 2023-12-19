@@ -32,7 +32,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     gcc -c -g -I. ${PROGRAM_NAME}.tab.c
     lex -o lex.yy.c ${PROGRAM_NAME}.l
     gcc -c -g -I. lex.yy.c
-    gcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o -llgcc -o matrix_calculator matrix_calculator.tab.o lex.yy.o
+    gcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o -llgcc -o ${PROGRAM_NAME} ${PROGRAM_NAME}.tab.o lex.yy.o
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS 系統的指令
     echo "Running on macOS"
@@ -65,6 +65,8 @@ for test_file in $TEST_DIR/*.in; do
     elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
         # 在 Windows 上運行時，確保程序名稱包含.exe
         actual_output=$(./"$PROGRAM_NAME.exe" < "$test_file") 
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        actual_output=$(./"$PROGRAM_NAME" < "$test_file")
     else
         echo "Unsupported operating system"
         exit 1
