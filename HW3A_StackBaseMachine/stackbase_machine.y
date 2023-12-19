@@ -28,16 +28,18 @@ lines: lines line
         
 line 
     : instruction EOL
+    | instruction
+    | EOL
     ;
 
 instruction 
     : LOAD NUM { push($2); }
-    | ADD { if(top < 1) { yyerror("Invalid format\n"); error = 1; YYABORT; } else { push(pop() + pop()); } }
-    | SUB { if(top < 1) { yyerror("Invalid format\n"); error = 1; YYABORT; } else { push(pop() - pop()); } }
-    | MUL { if(top < 1) { yyerror("Invalid format\n"); error = 1; YYABORT; } else { push(pop() * pop()); } }
-    | MOD { if(top < 1) { yyerror("Invalid format\n"); error = 1; YYABORT; } else { int a = pop(); int b = pop(); if(b == 0) { yyerror("Divide by zero\n"); YYABORT; } else { push(a % b); } } }
-    | INC { push(pop() + 1); }
-    | DEC { push(pop() - 1); }
+    | ADD { if(top < 1) { YYABORT; } else { push(pop() + pop()); } }
+    | SUB { if(top < 1) { YYABORT; } else { push(pop() - pop()); } }
+    | MUL { if(top < 1) { YYABORT; } else { push(pop() * pop()); } }
+    | MOD { if(top < 1) { YYABORT; } else { push(pop() % pop()); } }
+    | INC { if(top < 0) { YYABORT; } else {push(pop() + 1);} }
+    | DEC { if(top < 0) { YYABORT; } else {push(pop() - 1);} }
     ;
 
 %%
@@ -65,8 +67,7 @@ int is_empty(){
 }
 
 int main(int argc, char **argv){
-    yyparse();
-    
+    int error = yyparse();
     if (top == 0 && !error) {
         printf("%d\n", pop());
     } else {
