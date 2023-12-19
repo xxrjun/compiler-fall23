@@ -1,9 +1,2 @@
-<or>
-    <false/>
-    <not>
-        <and>
-        </and>
-    </not>
-    <or>
-    </or>
-</or>
+<and>
+</and>

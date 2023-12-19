@@ -1,9 +1,5 @@
-<not>
-    <and>
-        <or>
-            <false/>
-            <true/>
-        </or>
-        <true/>
-    </and>
-</not>
+<or>
+    <not>
+        <false/>
+    </not>
+</or>
