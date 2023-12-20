@@ -3,11 +3,11 @@
 - [Run Tests Scripts Template](#run-tests-scripts-template)
   - [Usage](#usage)
   - [Sample output](#sample-output)
+  - [其他腳本](#其他腳本)
 - [C/C++ 指定版本指令](#cc-指定版本指令)
 - [Lex 指令](#lex-指令)
 - [Yacc \& Lex 指令](#yacc--lex-指令)
 - [AC Screenshot](#ac-screenshot)
-
 
 ## Run Tests Scripts Template
 
@@ -19,7 +19,6 @@
 4. 清空編譯產生的檔案
 
 檔案 [run_tests_template.sh](./run_tests_template.sh)
-
 
 ### Usage
 
@@ -36,8 +35,8 @@ chmod +x ./run_tests_template.sh
 ```bash
 |   matrix_calculator.l
 |   matrix_calculator.y
-|   run_tests.sh        # 測試腳本，主要使用這個即可
-|   script.sh           # 編譯腳本
+|   run_tests.sh        # 測試腳本，包含編譯與執行測試，會清空編譯產生的檔案
+|   compile.sh          # 編譯腳本，僅編譯
 |
 \---testcases           # 檔名是對應的，一個 .in 對一個 .out
         1.in
@@ -74,6 +73,12 @@ Sample output 2
 <div>
     <img src="./assets/run_test_script_console_has_failed.png" width="80%">
 </div>
+
+### 其他腳本
+
+- [compile_template.sh](./compile_template.sh) 編譯腳本，修改檔名即可使用。會依據系統使用不同編譯指令。此腳本僅進行編譯，不會清空編譯產生的檔案。此腳本可以彈性修改編譯指令。
+
+- [raw_compile_template.sh](./raw_compile_template.sh) 寫死編譯指令的腳本，方便複製貼上使用。
 
 ## C/C++ 指定版本指令
 
