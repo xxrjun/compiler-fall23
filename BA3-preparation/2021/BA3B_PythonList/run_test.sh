@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TEST_DIR="./testcases" # TODO: Change this to your test directory
-PROGRAM_NAME="pythonlist" # TODO: Change this to your program name
+PROGRAM_NAME="list" # TODO: Change this to your program name
 PASSED=0
 FAILED=0
 
