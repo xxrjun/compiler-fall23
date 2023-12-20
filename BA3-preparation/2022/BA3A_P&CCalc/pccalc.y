@@ -48,17 +48,17 @@ int permutations(int M, int N){
     }
 
     int minus = M - N;
-    int denominator = 1;
-    for(int i = M; i > 1; i--){
-        denominator *= i;
-    }
-
     int numerator = 1;
-    for(int i = minus; i > 1; i--){
+    for(int i = M; i > 1; i--){
         numerator *= i;
     }
 
-    return denominator/numerator;
+    int denominator = 1;
+    for(int i = minus; i > 1; i--){
+        denominator *= i;
+    }
+
+    return numerator/denominator;
 }
 
 int combination(int M, int N){
@@ -68,20 +68,20 @@ int combination(int M, int N){
     }
 
     int minus = M - N;
-    int denominator = 1;
+    int numerator = 1;
     for(int i = M; i > 1; i--){
+        numerator *= i;
+    }
+
+    int denominator = 1;
+    for(int i = minus; i > 1; i--){
+        denominator *= i;
+    }
+    for(int i = N; i > 1; i--){
         denominator *= i;
     }
 
-    int numerator = 1;
-    for(int i = minus; i > 1; i--){
-        numerator *= i;
-    }
-    for(int i = N; i > 1; i--){
-        numerator *= i;
-    }
-
-    return denominator/numerator;
+    return numerator/denominator;
 }
 
 void yyerror(const char* message){
