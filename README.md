@@ -148,31 +148,32 @@ It will generate a file called `matrix_calculator.output` which contains the ver
 
 > 有些忘記截圖
 
-2023 BA2
+**2023 BA2**
 
 - BA2 Second Question
 - BA2 Book Information
 
 <div>
-    <img src="./assets/ac-screenshots/2023-ba2.png" width="100%">
+    <img src="./assets/ac-screenshots/2023-ba2.png" width="30%">
 </div>
+<br/>
 
-2023 HW3
+**2023 HW3**
 
 - HW3-1 Stack Base Machine 
 - HW3-2 Matrix Calculator
 
 <div>
-    <img src="./assets/ac-screenshots/2023-hw3.png" width="80%">
+    <img src="./assets/ac-screenshots/2023-hw3.png" width="30%">
 </div>
+<br/>
 
 
-2023 BA3
-
+**2023 BA3**
 
 - BA1 Simple Calculator
 - BA2 Stack Machine
 
 <div>
-    <img src="./assets/ac-screenshots/2023-ba3.png" width="80%">
+    <img src="./assets/ac-screenshots/2023-ba3.png" width="30%">
 </div>
