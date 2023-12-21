@@ -1,0 +1,6 @@
+The contents of the stack are: 1
+The contents of the stack are: 1 2
+The contents of the stack are: 1 2 3
+The contents of the stack are: 1 6
+The contents of the stack are: 6
+Runtime Error: The pop will lead to stack underflow.

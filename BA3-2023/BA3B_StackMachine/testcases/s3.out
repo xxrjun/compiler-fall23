@@ -1,0 +1,11 @@
+The contents of the stack are: 1
+The contents of the stack are: 1 1
+The contents of the stack are: 1 1 1
+The contents of the stack are: 1 1 1 1
+The contents of the stack are: 1 1 1 1 1
+The contents of the stack are: 1 1 1 1 1 1
+The contents of the stack are: 1 1 1 1 1 1 1
+The contents of the stack are: 1 1 1 1 1 1 1 1
+The contents of the stack are: 1 1 1 1 1 1 1 1 1
+The contents of the stack are: 1 1 1 1 1 1 1 1 1 1
+Runtime Error: The push will lead to stack overflow.
